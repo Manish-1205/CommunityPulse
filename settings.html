@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Settings - CommunityPulse</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#eff5ef",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eaefea",
+                        "surface-container-high": "#e4eae4",
+                        "surface-container-highest": "#dee4de",
+                        "surface-variant": "#dee4de",
+                        "surface": "#f5fbf5",
+                        "on-surface": "#171d1a",
+                        "on-surface-variant": "#3d4943",
+                        "primary": "#00694c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#008560",
+                        "on-primary-container": "#f5fff7",
+                        "primary-fixed": "#86f8c9",
+                        "primary-fixed-dim": "#68dbae",
+                        "secondary": "#1960a6",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "outline": "#6d7a73",
+                        "outline-variant": "#bccac1",
+                        "background": "#f5fbf5",
+                        "on-background": "#171d1a",
+                        "inverse-surface": "#2c322e",
+                        "inverse-on-surface": "#ecf2ed",
+                        "inverse-primary": "#68dbae",
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"
+                    },
+                    fontFamily: {
+                        headline: ["Inter"], body: ["Inter"], label: ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Toggle switch */
+        .cp-toggle {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .cp-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .cp-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #dee4de;
+            border-radius: 34px;
+            transition: 0.3s;
+        }
+
+        .cp-slider::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        input:checked+.cp-slider {
+            background: #00694c;
+        }
+
+        input:checked+.cp-slider::before {
+            transform: translateX(24px);
+        }
+
+        /* Dark mode overrides */
+        .dark body {
+            background: #0f1511;
+            color: #e2e8e3;
+        }
+
+        .dark .dark-card {
+            background: #1c2420 !important;
+        }
+
+        .dark .dark-section-bg {
+            background: #141a17 !important;
+        }
+
+        .dark input:checked+.cp-slider {
+            background: #68dbae;
+        }
+
+        .dark .cp-slider {
+            background: #3d4943;
+        }
+
+        /* Option chip */
+        .mode-chip {
+            flex: 1;
+            padding: 8px 4px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .mode-chip.active {
+            background: #00694c;
+            color: white;
+            border-color: #00694c;
+        }
+
+        .mode-chip:not(.active) {
+            background: transparent;
+            color: #6d7a73;
+            border-color: #bccac1;
+        }
+
+        .dark .mode-chip:not(.active) {
+            color: #9eb3a8;
+            border-color: #3d4943;
+        }
+    </style>
+</head>
+
+<body class="bg-surface-container-low text-on-surface pb-32 dark-section-bg">
+
+    <!-- Top App Bar -->
+    <header class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16
+    bg-emerald-50/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-white/20">
+        <div class="flex items-center gap-3">
+            <button onclick="window.history.back()"
+                class="p-2 rounded-full hover:bg-emerald-100 dark:hover:bg-zinc-800 active:scale-90 transition-all">
+                <span class="material-symbols-outlined text-emerald-900 dark:text-emerald-400">arrow_back</span>
+            </button>
+            <h1 class="font-bold text-xl tracking-tight text-emerald-900 dark:text-emerald-300" data-i18n="settings">
+                Settings</h1>
+        </div>
+    </header>
+
+    <main class="pt-20 px-4 max-w-2xl mx-auto space-y-5 pb-8">
+
+        <!-- ── APPEARANCE ──────────────────────────── -->
+        <section class="bg-white dark:bg-zinc-900 dark-card rounded-3xl overflow-hidden shadow-sm">
+            <div class="px-5 pt-5 pb-3">
+                <p class="text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-4"
+                    data-i18n="appearance">Appearance</p>
+
+                <!-- Dark Mode Label -->
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">dark_mode</span>
+                        </div>
+                        <span class="font-semibold text-sm text-on-surface dark:text-zinc-200"
+                            data-i18n="dark_mode">Dark Mode</span>
+                    </div>
+                </div>
+
+                <!-- 3-chip selector: Light / System / Dark -->
+                <div class="flex gap-2 p-1 bg-emerald-50 dark:bg-zinc-800 rounded-xl">
+                    <button class="mode-chip active" id="chip-light" onclick="setDarkMode('light')">
+                        <span class="material-symbols-outlined text-base block mx-auto mb-0.5">light_mode</span>
+                        <span data-i18n="light">Light</span>
+                    </button>
+                    <button class="mode-chip" id="chip-system" onclick="setDarkMode('system')">
+                        <span class="material-symbols-outlined text-base block mx-auto mb-0.5">devices</span>
+                        <span data-i18n="system">System</span>
+                    </button>
+                    <button class="mode-chip" id="chip-dark" onclick="setDarkMode('dark')">
+                        <span class="material-symbols-outlined text-base block mx-auto mb-0.5">dark_mode</span>
+                        <span data-i18n="dark">Dark</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── LANGUAGE ───────────────────────────── -->
+        <section class="bg-white dark:bg-zinc-900 dark-card rounded-3xl overflow-hidden shadow-sm">
+            <div class="px-5 pt-5 pb-5">
+                <p class="text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-4"
+                    data-i18n="language">Language</p>
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">translate</span>
+                    </div>
+                    <div class="flex-1">
+                        <select id="lang-select"
+                            class="w-full bg-emerald-50 dark:bg-zinc-800 border-none rounded-xl px-4 py-3 text-sm font-semibold text-on-surface dark:text-zinc-200 focus:ring-2 focus:ring-emerald-500 outline-none appearance-none cursor-pointer"
+                            onchange="changeLang(this.value)">
+                            <option value="en">🇬🇧 English</option>
+                            <option value="hi">🇮🇳 हिन्दी — Hindi</option>
+                            <option value="mr">🇮🇳 मराठी — Marathi</option>
+                            <option value="te">🇮🇳 తెలుగు — Telugu</option>
+                            <option value="kn">🇮🇳 ಕನ್ನಡ — Kannada</option>
+                            <option value="ur">🇵🇰 اردو — Urdu</option>
+                            <option value="ta">🇮🇳 தமிழ் — Tamil</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── NOTIFICATIONS ──────────────────────── -->
+        <section class="bg-white dark:bg-zinc-900 dark-card rounded-3xl overflow-hidden shadow-sm">
+            <div class="px-5 pt-5 pb-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-1"
+                    data-i18n="notifications">Notifications</p>
+            </div>
+            <!-- Row -->
+            <div class="divide-y divide-emerald-50 dark:divide-zinc-800">
+                <div class="flex items-center justify-between px-5 py-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">task_alt</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-on-surface dark:text-zinc-200">New Task Assignments</p>
+                            <p class="text-xs text-outline dark:text-zinc-500">Alerts when a task is assigned to you</p>
+                        </div>
+                    </div>
+                    <label class="cp-toggle">
+                        <input type="checkbox" checked id="notif-task" onchange="saveNotifPref('task', this.checked)">
+                        <span class="cp-slider"></span>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between px-5 py-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">campaign</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-on-surface dark:text-zinc-200">Urgent Alerts</p>
+                            <p class="text-xs text-outline dark:text-zinc-500">Critical field emergencies</p>
+                        </div>
+                    </div>
+                    <label class="cp-toggle">
+                        <input type="checkbox" checked id="notif-urgent"
+                            onchange="saveNotifPref('urgent', this.checked)">
+                        <span class="cp-slider"></span>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between px-5 py-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">check_circle</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-on-surface dark:text-zinc-200">Report Approvals</p>
+                            <p class="text-xs text-outline dark:text-zinc-500">When your reports are reviewed</p>
+                        </div>
+                    </div>
+                    <label class="cp-toggle">
+                        <input type="checkbox" id="notif-report" onchange="saveNotifPref('report', this.checked)">
+                        <span class="cp-slider"></span>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between px-5 py-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">groups</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-on-surface dark:text-zinc-200">Community Updates</p>
+                            <p class="text-xs text-outline dark:text-zinc-500">Ward news and announcements</p>
+                        </div>
+                    </div>
+                    <label class="cp-toggle">
+                        <input type="checkbox" id="notif-community" onchange="saveNotifPref('community', this.checked)">
+                        <span class="cp-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── ACCOUNT ────────────────────────────── -->
+        <section class="bg-white dark:bg-zinc-900 dark-card rounded-3xl overflow-hidden shadow-sm">
+            <div class="px-5 pt-5 pb-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-1">
+                    Account</p>
+            </div>
+            <div class="divide-y divide-emerald-50 dark:divide-zinc-800">
+                <!-- Edit Profile -->
+                <button onclick="window.location.href='profile.html'"
+                    class="w-full flex items-center justify-between px-5 py-4 hover:bg-emerald-50/60 dark:hover:bg-zinc-800/60 transition-colors active:scale-[0.98]">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">person</span>
+                        </div>
+                        <span class="text-sm font-semibold text-on-surface dark:text-zinc-200">Edit Profile</span>
+                    </div>
+                    <span class="material-symbols-outlined text-outline dark:text-zinc-500">chevron_right</span>
+                </button>
+                <!-- Notifications page -->
+                <button onclick="window.location.href='notifications.html'"
+                    class="w-full flex items-center justify-between px-5 py-4 hover:bg-emerald-50/60 dark:hover:bg-zinc-800/60 transition-colors active:scale-[0.98]">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">notifications</span>
+                        </div>
+                        <span class="text-sm font-semibold text-on-surface dark:text-zinc-200"
+                            data-i18n="notifications">Notifications</span>
+                    </div>
+                    <span class="material-symbols-outlined text-outline dark:text-zinc-500">chevron_right</span>
+                </button>
+                <!-- Privacy -->
+                <button
+                    class="w-full flex items-center justify-between px-5 py-4 hover:bg-emerald-50/60 dark:hover:bg-zinc-800/60 transition-colors active:scale-[0.98]">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                            <span
+                                class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">shield_lock</span>
+                        </div>
+                        <span class="text-sm font-semibold text-on-surface dark:text-zinc-200">Privacy & Security</span>
+                    </div>
+                    <span class="material-symbols-outlined text-outline dark:text-zinc-500">chevron_right</span>
+                </button>
+                <!-- Log Out -->
+                <button onclick="logout()"
+                    class="w-full flex items-center gap-3 px-5 py-4 hover:bg-emerald-50/60 dark:hover:bg-zinc-800/60 transition-colors active:scale-[0.98]">
+                    <div class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-zinc-800 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-emerald-700 dark:text-emerald-400">logout</span>
+                    </div>
+                    <span class="text-sm font-semibold text-emerald-700 dark:text-emerald-400" data-i18n="logout">Log
+                        Out</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ── DANGER ZONE ─────────────────────────── -->
+        <section
+            class="bg-red-50 dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-sm border border-red-100 dark:border-red-900/40">
+            <div class="px-5 pt-5 pb-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-red-600 dark:text-red-400 mb-1">Danger Zone
+                </p>
+            </div>
+            <button onclick="deleteAccount()"
+                class="w-full flex items-center gap-3 px-5 py-4 hover:bg-red-100/60 dark:hover:bg-red-900/20 transition-colors active:scale-[0.98]">
+                <div class="w-10 h-10 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-red-600 dark:text-red-400">delete_forever</span>
+                </div>
+                <div class="text-left">
+                    <p class="text-sm font-bold text-red-600 dark:text-red-400" data-i18n="delete_account">Delete
+                        Account</p>
+                    <p class="text-xs text-red-400 dark:text-red-500">This action cannot be undone</p>
+                </div>
+            </button>
+        </section>
+
+        <!-- App version -->
+        <p class="text-center text-xs text-outline dark:text-zinc-600 pb-2">CommunityPulse v1.0.0 · Field Edition</p>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-3 pb-6 px-4
+    bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl rounded-t-3xl shadow-[0_-8px_32px_rgba(0,0,0,0.06)]">
+        <a href="home.html" data-nav="home.html"
+            class="flex flex-col items-center justify-center text-emerald-500 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="home">Home</span>
+        </a>
+        <a href="report.html" data-nav="report.html"
+            class="flex flex-col items-center justify-center text-emerald-500 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="report">Report</span>
+        </a>
+        <a href="tasks.html" data-nav="tasks.html"
+            class="flex flex-col items-center justify-center text-emerald-500 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined">assignment</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="tasks">Tasks</span>
+        </a>
+        <a href="profile.html" data-nav="profile.html"
+            class="flex flex-col items-center justify-center bg-emerald-100 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-100 rounded-2xl px-5 py-2.5 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">person</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="profile">Profile</span>
+        </a>
+    </nav>
+
+    <script src="js/app.js"></script>
+    <script>
+        /* ── Dark mode chips ── */
+        function setDarkMode(pref) {
+            applyDarkMode(pref);
+            ['light', 'system', 'dark'].forEach(id => {
+                document.getElementById('chip-' + id).classList.toggle('active', id === pref);
+            });
+        }
+
+        /* ── Language ── */
+        function changeLang(val) {
+            applyLanguage(val);
+        }
+
+        /* ── Notification prefs ── */
+        function saveNotifPref(key, val) {
+            localStorage.setItem('cp_notif_' + key, val);
+        }
+
+        /* ── Boot ── */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sync dark-mode chips
+            const dm = localStorage.getItem('cp_dark_mode') || 'system';
+            ['light', 'system', 'dark'].forEach(id => {
+                document.getElementById('chip-' + id).classList.toggle('active', id === dm);
+            });
+            // Sync language select
+            const lang = localStorage.getItem('cp_language') || 'en';
+            document.getElementById('lang-select').value = lang;
+            // Sync notification toggles
+            ['task', 'urgent', 'report', 'community'].forEach(k => {
+                const stored = localStorage.getItem('cp_notif_' + k);
+                if (stored !== null) {
+                    document.getElementById('notif-' + k).checked = stored === 'true';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,1 +1,1 @@
-# CommunityPulse
+CommunityPulse project structure.

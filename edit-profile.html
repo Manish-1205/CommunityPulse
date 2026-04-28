@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Edit Profile | CommunityPulse</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#006c4e",
+                        "surface-container-high": "#e4eae4",
+                        "primary-fixed-dim": "#68dbae",
+                        "on-tertiary-container": "#fffbff",
+                        "on-primary-fixed-variant": "#00513a",
+                        "surface-dim": "#d6dbd6",
+                        "on-secondary-fixed-variant": "#004883",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#140067",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#00447e",
+                        "tertiary-fixed-dim": "#c5c0ff",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "on-surface-variant": "#3d4943",
+                        "surface-container-low": "#eff5ef",
+                        "outline": "#6d7a73",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#bccac1",
+                        "on-primary-fixed": "#002115",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#7ab3ff",
+                        "inverse-primary": "#68dbae",
+                        "secondary-fixed": "#d4e3ff",
+                        "secondary": "#1960a6",
+                        "surface-bright": "#f5fbf5",
+                        "on-tertiary-fixed-variant": "#3f35a3",
+                        "on-error-container": "#93000a",
+                        "on-background": "#171d1a",
+                        "on-primary-container": "#f5fff7",
+                        "surface-variant": "#dee4de",
+                        "tertiary": "#554cb9",
+                        "tertiary-container": "#6e66d4",
+                        "background": "#f5fbf5",
+                        "inverse-surface": "#2c322e",
+                        "on-surface": "#171d1a",
+                        "primary": "#00694c",
+                        "inverse-on-surface": "#ecf2ed",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#e3dfff",
+                        "primary-container": "#008560",
+                        "primary-fixed": "#86f8c9",
+                        "surface-container-highest": "#dee4de",
+                        "on-secondary-fixed": "#001c39",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eaefea",
+                        "surface": "#f5fbf5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"], "display": ["Inter"], "body": ["Inter"], "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+    <style type="text/tailwindcss">
+        .toggle-btn {
+            @apply px-4 py-2 border border-outline-variant/30 text-on-surface-variant rounded-full text-sm font-medium transition-colors cursor-pointer;
+        }
+        .toggle-btn.active {
+            @apply bg-primary-container text-white border-transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-surface-container-low text-on-surface min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-emerald-50/70 dark:bg-zinc-900/70 backdrop-blur-xl">
+        <div class="flex items-center gap-3">
+            <h1 class="font-['Inter'] font-bold tracking-tight text-xl text-emerald-900 dark:text-emerald-400">Complete Profile</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="save-profile-btn" class="text-[14px] font-bold text-primary px-4 py-2 rounded-full hover:bg-emerald-100 dark:hover:bg-zinc-800 transition-colors">Save</button>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-2xl mx-auto space-y-8">
+        <div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm space-y-6">
+            
+            <div class="space-y-4">
+                <label class="block text-xs font-bold tracking-wider uppercase text-on-surface-variant">Personal Info</label>
+                <div>
+                    <label class="block text-xs text-on-surface-variant mb-1">Full Name</label>
+                    <input type="text" id="input-name" class="w-full bg-surface-variant border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary" placeholder="Your Name">
+                </div>
+                <div>
+                    <label class="block text-xs text-on-surface-variant mb-1">Phone Number</label>
+                    <input type="tel" id="input-phone" class="w-full bg-surface-variant border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary" placeholder="+91 00000 00000">
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <label class="block text-xs font-bold tracking-wider uppercase text-on-surface-variant">Primary Ward</label>
+                <select id="input-ward" class="w-full bg-surface-variant border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary">
+                    <option value="" disabled selected>Select your ward</option>
+                    <option value="ward_1">Ward 1</option>
+                    <option value="ward_2">Ward 2</option>
+                    <option value="ward_3">Ward 3</option>
+                    <option value="ward_4">Ward 4</option>
+                </select>
+            </div>
+
+            <div class="space-y-4">
+                <label class="block text-xs font-bold tracking-wider uppercase text-on-surface-variant">Skills</label>
+                <div class="flex flex-wrap gap-2" id="skills-container">
+                    <div class="toggle-btn" data-value="Medical">Medical</div>
+                    <div class="toggle-btn" data-value="Cooking">Cooking</div>
+                    <div class="toggle-btn" data-value="Logistics">Logistics</div>
+                    <div class="toggle-btn" data-value="Teaching">Teaching</div>
+                    <div class="toggle-btn" data-value="Counselling">Counselling</div>
+                    <div class="toggle-btn" data-value="Construction">Construction</div>
+                    <div class="toggle-btn" data-value="Translation">Translation</div>
+                    <div class="toggle-btn" data-value="IT Support">IT Support</div>
+                    <div class="toggle-btn" data-value="Driving">Driving</div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <label class="block text-xs font-bold tracking-wider uppercase text-on-surface-variant">Languages Spoken</label>
+                <div class="flex flex-wrap gap-2" id="languages-container">
+                    <div class="toggle-btn" data-value="English">English</div>
+                    <div class="toggle-btn" data-value="Hindi">Hindi</div>
+                    <div class="toggle-btn" data-value="Marathi">Marathi</div>
+                    <div class="toggle-btn" data-value="Urdu">Urdu</div>
+                    <div class="toggle-btn" data-value="Kannada">Kannada</div>
+                    <div class="toggle-btn" data-value="Telugu">Telugu</div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <label class="block text-xs font-bold tracking-wider uppercase text-on-surface-variant">Availability (Tap to select)</label>
+                <div class="overflow-x-auto hide-scrollbar">
+                    <div class="min-w-[400px]" id="availability-container">
+                        <div class="grid grid-cols-8 gap-1 mb-2">
+                            <div class="h-8"></div>
+                            <div class="h-8 flex items-center justify-center text-[10px] font-bold uppercase text-on-surface-variant">Mon</div>
+                            <div class="h-8 flex items-center justify-center text-[10px] font-bold uppercase text-on-surface-variant">Tue</div>
+                            <div class="h-8 flex items-center justify-center text-[10px] font-bold uppercase text-on-surface-variant">Wed</div>
+                            <div class="h-8 flex items-center justify-center text-[10px] font-bold uppercase text-on-surface-variant">Thu</div>
+                            <div class="h-8 flex items-center justify-center text-[10px] font-bold uppercase text-on-surface-variant">Fri</div>
+                            <div class="h-8 flex items-center justify-center text-[10px] font-bold uppercase text-on-surface-variant">Sat</div>
+                            <div class="h-8 flex items-center justify-center text-[10px] font-bold uppercase text-on-surface-variant">Sun</div>
+                        </div>
+                        <!-- Morning -->
+                        <div class="grid grid-cols-8 gap-1 mb-1">
+                            <div class="flex items-center text-[10px] font-bold uppercase text-on-surface-variant pr-2">Morning</div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="mon_morning"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="tue_morning"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="wed_morning"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="thu_morning"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="fri_morning"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="sat_morning"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="sun_morning"></div>
+                        </div>
+                        <!-- Afternoon -->
+                        <div class="grid grid-cols-8 gap-1 mb-1">
+                            <div class="flex items-center text-[10px] font-bold uppercase text-on-surface-variant pr-2">Afternoon</div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="mon_afternoon"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="tue_afternoon"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="wed_afternoon"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="thu_afternoon"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="fri_afternoon"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="sat_afternoon"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="sun_afternoon"></div>
+                        </div>
+                        <!-- Evening -->
+                        <div class="grid grid-cols-8 gap-1 mb-1">
+                            <div class="flex items-center text-[10px] font-bold uppercase text-on-surface-variant pr-2">Evening</div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="mon_evening"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="tue_evening"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="wed_evening"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="thu_evening"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="fri_evening"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="sat_evening"></div>
+                            <div class="avail-toggle w-full h-10 bg-surface-variant border border-outline-variant/30 rounded-sm cursor-pointer flex items-center justify-center transition-colors" data-id="sun_evening"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="pt-4">
+            <button id="save-profile-btn-bottom" class="w-full py-4 rounded-2xl bg-[#1D9E75] text-white font-bold text-lg flex items-center justify-center gap-3 shadow-lg active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined">save</span>
+                Save Profile
+            </button>
+        </div>
+    </main>
+
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/edit-profile.js"></script>
+</body>
+
+</html>

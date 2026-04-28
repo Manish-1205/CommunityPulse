@@ -1,0 +1,44 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function maxSize(mb)  { return request.resource.size < mb * 1024 * 1024; }
+    function isImage()    { return request.resource.contentType.matches('image/.*'); }
+    function isAudio()    { return request.resource.contentType.matches('audio/.*'); }
+    function isDoc()      {
+      return request.resource.contentType.matches('application/pdf') ||
+             request.resource.contentType.matches('text/csv');
+    }
+
+    // ── Report media (photos, voice notes, scanned docs) ─────────────────────
+    match /reports/{userId}/{reportId}/{file} {
+      allow read:   if isSignedIn();
+      allow create: if isOwner(userId) &&
+                       (isImage() || isAudio() || isDoc()) &&
+                       maxSize(20);
+      allow delete: if isOwner(userId);
+    }
+
+    // ── Task completion photos ────────────────────────────────────────────────
+    match /task_completions/{userId}/{taskId}/{file} {
+      allow read:   if isSignedIn();
+      allow create: if isOwner(userId) && isImage() && maxSize(10);
+      allow delete: if isOwner(userId);
+    }
+
+    // ── Profile avatars ───────────────────────────────────────────────────────
+    match /avatars/{userId} {
+      allow read:  if isSignedIn();
+      allow write: if isOwner(userId) && isImage() && maxSize(2);
+    }
+
+    // ── AI processing outputs (read-only for users) ───────────────────────────
+    match /ai_outputs/{jobId}/{file} {
+      allow read:  if isSignedIn();
+      allow write: if false; // Only Cloud Functions write here
+    }
+  }
+}

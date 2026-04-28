@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CommunityPulse | Volunteer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#c5c0ff",
+                        "surface-container-low": "#eff5ef",
+                        "secondary-container": "#7ab3ff",
+                        "on-tertiary-fixed-variant": "#3f35a3",
+                        "on-surface": "#171d1a",
+                        "background": "#f5fbf5",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#f5fff7",
+                        "tertiary": "#554cb9",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eaefea",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dee4de",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#fffbff",
+                        "secondary-fixed": "#d4e3ff",
+                        "secondary": "#1960a6",
+                        "surface-container-high": "#e4eae4",
+                        "outline": "#6d7a73",
+                        "surface-container-highest": "#dee4de",
+                        "on-tertiary-fixed": "#140067",
+                        "on-primary-fixed": "#002115",
+                        "on-secondary-fixed": "#001c39",
+                        "tertiary-fixed": "#e3dfff",
+                        "primary": "#00694c",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d6dbd6",
+                        "outline-variant": "#bccac1",
+                        "surface": "#f5fbf5",
+                        "on-secondary-fixed-variant": "#004883",
+                        "surface-tint": "#006c4e",
+                        "primary-fixed": "#86f8c9",
+                        "primary-container": "#008560",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#6e66d4",
+                        "inverse-on-surface": "#ecf2ed",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2c322e",
+                        "on-background": "#171d1a",
+                        "inverse-primary": "#68dbae",
+                        "on-surface-variant": "#3d4943",
+                        "primary-fixed-dim": "#68dbae",
+                        "on-secondary-container": "#00447e",
+                        "on-primary-fixed-variant": "#00513a",
+                        "surface-bright": "#f5fbf5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "display": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-header {
+            background: rgba(239, 245, 239, 0.7);
+            backdrop-filter: blur(24px);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-surface-container-low text-on-surface min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header
+        class="sticky top-0 z-50 flex items-center justify-between px-6 h-16 w-full bg-emerald-50/70 dark:bg-emerald-950/70 backdrop-blur-xl">
+        <div class="flex flex-col">
+            <span id="greeting-text" class="text-[16px] font-medium text-[#1A1A1A] dark:text-zinc-100">Good morning,
+                Rahul</span>
+            <div class="flex items-center mt-0.5">
+                <span id="ward-badge" class="bg-[#E1F5EE] text-[#085041] text-[12px] px-2 py-0.5 rounded-lg font-semibold">Ward 4</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="notifications.html" class="relative active:scale-95 duration-300">
+                <span class="material-symbols-outlined text-on-surface-variant text-[24px]"
+                    data-icon="notifications">notifications</span>
+                <span
+                    class="absolute top-0.5 right-0.5 w-2 h-2 bg-error rounded-full border border-surface-container-lowest"></span>
+            </a>
+            <a href="profile.html"
+                class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm shadow-sm active:scale-95 duration-300">
+                RK
+            </a>
+        </div>
+    </header>
+    <main class="px-4 pt-6 space-y-6">
+        <!-- Stats Row -->
+        <section class="grid grid-cols-3 gap-2">
+            <div
+                class="bg-[#EAF3DE] p-4 rounded-xl flex flex-col justify-between h-32 shadow-sm border-l-4 border-[#27500A]">
+                <div>
+                    <span id="tasks-done-stat" class="block text-2xl font-black text-[#27500A]">0</span>
+                    <span class="text-[11px] leading-tight font-semibold text-[#3B6D11] uppercase tracking-wider">tasks
+                        done</span>
+                </div>
+                <div class="flex items-center text-[10px] text-[#27500A] font-bold">
+                    <span class="material-symbols-outlined text-[12px] mr-0.5"
+                        style="font-variation-settings: 'wght' 700">trending_up</span>
+                    +0 last month
+                </div>
+            </div>
+            <div
+                class="bg-[#FFF8E1] p-4 rounded-xl flex flex-col justify-between h-32 shadow-sm border-l-4 border-[#633806]">
+                <div>
+                    <div class="flex items-center">
+                        <span id="active-tasks-stat" class="block text-2xl font-black text-[#633806]">0</span>
+                        <span class="ml-1 w-2 h-2 rounded-full bg-[#EF9F27]"></span>
+                    </div>
+                    <span class="text-[11px] leading-tight font-semibold text-[#633806] uppercase tracking-wider">active
+                        task</span>
+                </div>
+                <div class="text-[10px] text-[#633806] font-bold">
+                    pending acceptance
+                </div>
+            </div>
+            <div
+                class="bg-[#E1F5EE] p-4 rounded-xl flex flex-col justify-between h-32 shadow-sm border-l-4 border-[#085041]">
+                <div>
+                    <div class="flex items-center gap-1">
+                        <span id="impact-score-stat" class="block text-2xl font-black text-[#085041]">0</span>
+                        <span class="material-symbols-outlined text-[18px] text-[#085041]" data-icon="star"
+                            style="font-variation-settings: 'FILL' 1">star</span>
+                    </div>
+                    <span class="text-[11px] leading-tight font-semibold text-[#085041] uppercase tracking-wider">impact
+                        score</span>
+                </div>
+                <div class="text-[10px] text-[#085041] font-bold">
+                    +8 this week
+                </div>
+            </div>
+        </section>
+        <!-- Urgent Task Banner -->
+        <section id="urgent-task-container" class="hidden">
+            <!-- Populated dynamically in home.js -->
+        </section>
+        <!-- Recent Activity -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-[14px] font-semibold text-[#1A1A1A] dark:text-zinc-100">Recent activity</h2>
+                <button onclick="window.location.href='tasks.html'"
+                    class="text-primary text-[12px] font-bold uppercase tracking-wider">View All</button>
+            </div>
+            <div id="recent-activity-list" class="space-y-3">
+                <!-- Populated dynamically in home.js -->
+                <div class="text-sm text-on-surface-variant italic p-4 text-center">Loading recent activity...</div>
+            </div>
+        </section>
+        <!-- Bento Spotlight Section -->
+        <section class="grid grid-cols-2 gap-3 pb-4">
+            <div class="bg-secondary text-white p-5 rounded-2xl col-span-2 relative overflow-hidden h-40 group">
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold leading-tight">Coordinate regional logistics</h3>
+                        <p class="text-sm opacity-80 mt-1">New coordinator training opens soon</p>
+                    </div>
+                    <button
+                        class="w-fit bg-white/20 backdrop-blur-md px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-white/30 transition-all">Learn
+                        more</button>
+                </div>
+                <img alt="Volunteers meeting"
+                    class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:scale-105 transition-transform duration-700"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW43BYHBgZ6bZhDzxKCciBrQMHe4kNjxk5yWg09vnJFX7k1sjtpfQMx49Ca8BDebpf3T_-0mK410jTSsyrhd4M4eQryHuXI_4kvcCyCnRvs4W-l0kCiDiBL8K7jKnPMKayv-Hv5OjqOIALNrSCgailqoY6T9xkhlJByuKnNM3BuMlYRvweZ62j32vjvCQS5R_n92yXVRj76oHMBmq3zvJAYcDE6lwMfouhzDSjUUIP9qdDXYCeUSk01WLPQgeXrEuVPWUa4v7bxEA" />
+            </div>
+        </section>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+        class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-3 pb-6 px-4 bg-white/80 dark:bg-emerald-950/80 backdrop-blur-2xl rounded-t-3xl shadow-[0_-8px_32px_rgba(0,0,0,0.04)]">
+        <a class="flex flex-col items-center justify-center bg-emerald-100 dark:bg-emerald-800 text-emerald-900 dark:text-emerald-50 rounded-2xl px-5 py-2.5 transition-all relative active:scale-90 duration-200"
+            href="home.html" data-nav="home.html">
+            <div class="absolute -top-3 w-8 h-1 bg-[#1D9E75] rounded-full"></div>
+            <span class="material-symbols-outlined" data-icon="home"
+                style="font-variation-settings: 'FILL' 1">home</span>
+            <span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-widest mt-1"
+                data-i18n="home">Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-emerald-600 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200"
+            href="report.html" data-nav="report.html">
+            <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+            <span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-widest mt-1"
+                data-i18n="report">Report</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-emerald-600 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200"
+            href="tasks.html" data-nav="tasks.html">
+            <span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+            <span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-widest mt-1"
+                data-i18n="tasks">Tasks</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-emerald-600 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200"
+            href="profile.html" data-nav="profile.html">
+            <span class="material-symbols-outlined" data-icon="person">person</span>
+            <span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-widest mt-1"
+                data-i18n="profile">Profile</span>
+        </a>
+    </nav>
+
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/home.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dynamic greeting
+            const greet = document.getElementById('greeting-text');
+            if (greet) greet.textContent = getGreeting() + ', Rahul';
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function hasRole(role) {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
+
+    function isCoordinator() { return hasRole('coordinator'); }
+    function isVolunteer()   { return hasRole('volunteer'); }
+    function isAdmin()       { return hasRole('admin'); }
+
+    // ── Users ─────────────────────────────────────────────────────────────────
+    match /users/{uid} {
+      allow read:   if isOwner(uid) || isCoordinator() || isAdmin();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid) || isAdmin();
+      allow delete: if isOwner(uid) || isAdmin();
+    }
+
+    // ── Reports (field submissions) ──────────────────────────────────────────
+    match /reports/{reportId} {
+      allow read:   if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.authorId == request.auth.uid;
+      allow update: if isCoordinator() || isAdmin() ||
+                       (isVolunteer() && resource.data.authorId == request.auth.uid
+                        && resource.data.status == 'draft');
+      allow delete: if isAdmin();
+    }
+
+    // ── Tasks ────────────────────────────────────────────────────────────────
+    match /tasks/{taskId} {
+      allow read:   if isSignedIn();
+      allow create: if isCoordinator() || isAdmin();
+      allow update: if isCoordinator() || isAdmin() ||
+                       (isVolunteer() && resource.data.assignedTo == request.auth.uid);
+      allow delete: if isCoordinator() || isAdmin();
+    }
+
+    // ── Task Activity / Updates ───────────────────────────────────────────────
+    match /tasks/{taskId}/updates/{updateId} {
+      allow read:   if isSignedIn();
+      allow create: if isSignedIn() &&
+                       (resource == null || resource.data.authorId == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    // ── Notifications ─────────────────────────────────────────────────────────
+    match /notifications/{notifId} {
+      allow read:   if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isCoordinator() || isAdmin();
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // ── Wards (read-only reference data) ─────────────────────────────────────
+    match /wards/{wardId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ── AI Processing Queue ───────────────────────────────────────────────────
+    match /ai_queue/{jobId} {
+      allow read:   if isCoordinator() || isAdmin();
+      allow create: if isSignedIn();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── Impact Scores ─────────────────────────────────────────────────────────
+    match /impact/{uid} {
+      allow read:   if isOwner(uid) || isCoordinator() || isAdmin();
+      allow write:  if isAdmin();
+    }
+  }
+}

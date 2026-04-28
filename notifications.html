@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Notifications - CommunityPulse</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#eff5ef",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eaefea",
+                        "surface-container-high": "#e4eae4",
+                        "on-surface": "#171d1a",
+                        "on-surface-variant": "#3d4943",
+                        "primary": "#00694c",
+                        "primary-container": "#008560",
+                        "primary-fixed": "#86f8c9",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "outline": "#6d7a73",
+                        "outline-variant": "#bccac1",
+                        "surface": "#f5fbf5",
+                    },
+                    borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+                    fontFamily: { headline: ["Inter"], body: ["Inter"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .dark body {
+            background: #0f1511;
+            color: #e2e8e3;
+        }
+    </style>
+</head>
+
+<body class="bg-surface-container-low dark:bg-[#0f1511] text-on-surface pb-32">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16
+    bg-emerald-50/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-white/20">
+        <div class="flex items-center gap-3">
+            <button onclick="window.history.back()"
+                class="p-2 rounded-full hover:bg-emerald-100 dark:hover:bg-zinc-800 active:scale-90 transition-all">
+                <span class="material-symbols-outlined text-emerald-900 dark:text-emerald-400">arrow_back</span>
+            </button>
+            <h1 class="font-bold text-xl tracking-tight text-emerald-900 dark:text-emerald-300"
+                data-i18n="notifications">Notifications</h1>
+        </div>
+        <button id="mark-all-btn"
+            class="text-xs font-bold text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg hover:bg-emerald-100 dark:hover:bg-zinc-800 transition-colors">
+            Mark all read
+        </button>
+    </header>
+
+    <main class="pt-20 px-4 max-w-2xl mx-auto space-y-2">
+
+        <!-- Unread badge count -->
+        <div class="flex items-center justify-between py-3">
+            <span class="text-xs font-bold uppercase tracking-widest text-outline dark:text-zinc-500">Today</span>
+            <span id="unread-badge"
+                class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                3 new
+            </span>
+        </div>
+
+        <!-- Notification list -->
+        <div class="space-y-2" id="notif-list">
+            <!-- Populated by JS -->
+        </div>
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-3 pb-6 px-4
+    bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl rounded-t-3xl shadow-[0_-8px_32px_rgba(0,0,0,0.06)]">
+        <a href="home.html" data-nav="home.html"
+            class="flex flex-col items-center justify-center text-emerald-500 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="home">Home</span>
+        </a>
+        <a href="report.html" data-nav="report.html"
+            class="flex flex-col items-center justify-center text-emerald-500 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="report">Report</span>
+        </a>
+        <a href="tasks.html" data-nav="tasks.html"
+            class="flex flex-col items-center justify-center text-emerald-500 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined">assignment</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="tasks">Tasks</span>
+        </a>
+        <a href="profile.html" data-nav="profile.html"
+            class="flex flex-col items-center justify-center text-emerald-500 dark:text-emerald-400 px-5 py-2.5 hover:text-emerald-900 transition-all active:scale-90 duration-200">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1" data-i18n="profile">Profile</span>
+        </a>
+    </nav>
+
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/notifications.js"></script>
+</body>
+
+</html>
